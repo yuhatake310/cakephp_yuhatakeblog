@@ -1,5 +1,7 @@
 <?php
 class Post extends AppModel {
+	public $actsAs = array( 'SoftDelete' );
+
 	public $belongsTo = array(
 		'User' => array(
 			'className' => 'User',
