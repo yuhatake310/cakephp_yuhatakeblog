@@ -12,11 +12,11 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
- * @package       app.Controller
- * @since         CakePHP(tm) v 0.2.9
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @copyright	  Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * @link		  https://cakephp.org CakePHP(tm) Project
+ * @package		  app.Controller
+ * @since		  CakePHP(tm) v 0.2.9
+ * @license		  https://opensource.org/licenses/mit-license.php MIT License
  */
 
 App::uses('Controller', 'Controller');
@@ -31,5 +31,28 @@ App::uses('Controller', 'Controller');
  * @link		https://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
-	public $components = array('DebugKit.Toolbar');
+	public $components = array(
+		'DebugKit.Toolbar'
+		'Flash',
+		'Auth' => array(
+			'loginRedirect' => array(
+				'controller' => 'posts',
+				'action' => 'index'
+			),
+			'logoutRedirect' => array(
+				'controller' => 'pages',
+				'action' => 'display',
+				'home'
+			),
+			'authenticate' => array(
+				'Form' => array(
+					'passwordHasher' => 'Blowfish'
+				)
+			)
+		)
+	);
+
+	public function beforeFilter() {
+		$this->Auth->allow('index', 'view');
+	}
 }
