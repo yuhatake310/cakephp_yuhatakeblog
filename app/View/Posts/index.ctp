@@ -2,7 +2,7 @@
 <p><?php echo $this->Html->link('Add Post', array('controller' => 'posts', 'action' => 'add')); ?></p>
 <table>
 <tr>
-<th>Id</th>
+<th>Name</th>
 <th>Title</th>
 <th>Action</th>
 <th>Created</th>
@@ -12,7 +12,7 @@
 
 <?php foreach ($posts as $post): ?>
 <tr>
-<td><?php echo $post['Post']['id']; ?></td>
+<td><?php echo $post['User']['username']; ?></td>
 <td>
 <?php
 echo $this->Html->link(
