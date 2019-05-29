@@ -1,5 +1,11 @@
 <h1>Blog posts</h1>
-<p><?php echo $this->Html->link('Add Post', array('controller' => 'posts', 'action' => 'add')); ?></p>
+<?php if (isset($user)) : ?>
+<p><?php echo $this->Html->link('新規投稿', array('controller' => 'posts', 'action' => 'add')); ?></p>
+<p><?php echo $this->Html->link('ログアウト', array('controller'=>'users','action'=>'logout')); ?></p>
+<?php else : ?>
+<p><?php echo $this->Html->link('会員登録', array('controller'=>'users','action'=>'add')); ?></p>
+<p><?php echo $this->Html->link('ログイン', array('controller'=>'users','action'=>'login')); ?></p>
+<?php endif; ?>
 <table>
 <tr>
 <th>Name</th>

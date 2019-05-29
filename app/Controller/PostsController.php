@@ -20,6 +20,8 @@ class PostsController extends AppController {
 	}
 
 	public function index() {
+		$user = $this->Auth->user();
+		$this->set('user', $user);
 		$this->set('posts', $this->Post->find('all'));
 	}
 
