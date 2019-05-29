@@ -10,6 +10,20 @@ class User extends AppModel {
 				'message' => 'A username is required'
 			)
 		),
+		'email' => array(
+			'required' => array(
+				'rule' => 'notBlank',
+				'message' => 'パスワードを入力してください'
+			),
+			'mail_format' => array(
+				'rule' => 'email',
+				'message' => '正しいメールアドレスを入力してください'
+			),
+			'mail_unique' => array(
+				'rule' => 'isUnique',
+				'message' => '入力したメールアドレスは既に登録されています'
+			)
+		),
 		'password' => array(
 			'required' => array(
 				'rule' =>  'notBlank',
