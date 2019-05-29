@@ -1,4 +1,4 @@
-<h1>Blog posts</h1>
+<h2>ブログ記事一覧</h2>
 <?php if (isset($user)) : ?>
 <p><?php echo $this->Html->link('新規投稿', array('controller' => 'posts', 'action' => 'add')); ?></p>
 <p><?php echo $this->Html->link('ログアウト', array('controller'=>'users','action'=>'logout')); ?></p>
@@ -8,11 +8,11 @@
 <?php endif; ?>
 <table>
 <tr>
-<th>Id</th>
-<th>Name</th>
-<th>Title</th>
-<th>Body</th>
-<th>Created</th>
+<th>投稿ID</th>
+<th>投稿者名</th>
+<th>タイトル</th>
+<th>本文</th>
+<th>作成日時</th>
 </tr>
 
 <!-- $posts配列をループして、投稿記事の情報を表示 -->
@@ -28,20 +28,23 @@ echo $this->Html->link(
 	array('controller' => 'posts', 'action' => 'view', $post['Post']['id'])
 );
 ?>
-<br>
+
+
+<?php if ($post['User']['id'] == $user['id']) : ?>
 <?php
-echo $this->Form->postLink(
-	'Delete',
-	array('action' => 'delete', $post['Post']['id']),
-	array('confirm' => 'Are you sure?')
+echo $this->Html->link(
+	'編集', array('action' => 'edit', $post['Post']['id'])
 );
 ?>
 
 <?php
-echo $this->Html->link(
-	'Edit', array('action' => 'edit', $post['Post']['id'])
+echo $this->Form->postLink(
+	'削除',
+	array('action' => 'delete', $post['Post']['id']),
+	array('confirm' => 'Are you sure?')
 );
 ?>
+<?php endif; ?>
 </td>
 <td><?php echo $post['Post']['body']; ?></td>
 <td><?php echo $post['Post']['created']; ?></td>
