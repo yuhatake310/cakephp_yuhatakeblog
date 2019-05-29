@@ -1,6 +1,5 @@
 <?php
 class PostsController extends AppController {
-	public $components = array('Flash');
 	public $helpers = array('Html', 'Form', 'Flash');
 
 	public function index() {

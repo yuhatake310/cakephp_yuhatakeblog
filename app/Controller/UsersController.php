@@ -2,8 +2,7 @@
 App::uses('AppController', 'Controller');
 
 class UsersController extends AppController {
-	public $components = array('Flash');
-	public $helpers = array('Flash');
+	public $helpers = array('Html', 'Form', 'Flash');
 
 	public function beforeFilter() {
 		parent::beforeFilter();
