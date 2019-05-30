@@ -1,3 +1,4 @@
+<?php $this->assign('title', 'ブログTop'); ?>
 <h2>ブログ記事一覧</h2>
 <?php if (isset($user)) : ?>
 <p><?php echo $this->Html->link('新規投稿', array('controller' => 'posts', 'action' => 'add')); ?></p>

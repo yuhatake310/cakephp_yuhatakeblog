@@ -1,7 +1,8 @@
+<?php $this->assign('title', '会員登録画面'); ?>
 <div class="users form">
 <?php echo $this->Form->create('User'); ?>
 <fieldset>
-<legend><?php echo __('Add User'); ?></legend>
+<legend><?php echo __('会員登録'); ?></legend>
 <?php
 echo $this->Form->input('username');
 echo $this->Form->input('email');
@@ -11,5 +12,5 @@ echo $this->Form->input('role', array(
 ));
 ?>
 </fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
+<?php echo $this->Form->end(__('登録')); ?>
 </div>
