@@ -30,7 +30,7 @@ echo $this->Html->link(
 ?>
 
 
-<?php if ($post['User']['id'] == $user['id']) : ?>
+<?php if ($post['User']['id'] == $user['id'] || $user['role'] == 'admin') : ?>
 <?php
 echo $this->Html->link(
 	'編集', array('action' => 'edit', $post['Post']['id'])
