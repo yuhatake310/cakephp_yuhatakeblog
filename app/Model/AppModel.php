@@ -44,5 +44,5 @@ class AppModel extends Model {
 			return (bool)$this->field('deleted', array('deleted' => 1));
 		}
 		return $result;
-		}
+	}
 }
