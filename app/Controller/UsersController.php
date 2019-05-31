@@ -3,10 +3,18 @@ App::uses('AppController', 'Controller');
 
 class UsersController extends AppController {
 	public $helpers = array('Html', 'Form', 'Flash');
+	public $components = array('Security');
 
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->allow('add', 'logout');
+		$this->Security->blackHoleCallback = 'blackhole';
+	}
+
+	public function blackhole($type = 'csrf') {
+		$this->Flash->error(__('不正な送信が行われました'));
+		return $this->redirect(array('action' => 'add'));
+		exit();
 	}
 
 	public function login() {
@@ -24,6 +32,8 @@ class UsersController extends AppController {
 	}
 
 	public function add() {
+		$user = $this->Auth->user();
+		$this->set('user', $user);
 		if ($this->request->is('post')) {
 			$this->User->create();
 			if ($this->User->save($this->request->data)) {
