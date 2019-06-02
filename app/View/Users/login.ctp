@@ -4,10 +4,10 @@
 <?php echo $this->Form->create('User'); ?>
 <fieldset>
 <legend>
-<?php echo __('ユーザー名とパスワードを入力してください'); ?>
+<?php echo __('メールアドレスとパスワードを入力してください'); ?>
 </legend>
 <?php
-echo $this->Form->input('username');
+echo $this->Form->input('email');
 echo $this->Form->input('password');
 ?>
 </fieldset>
