@@ -63,6 +63,10 @@ class UsersController extends AppController {
 			throw new NotFoundException(__('Invalid user'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
+			$path = Configure::read('App.imageBaseUrl');
+			$image = $this->request->data('User.image');
+			$image_name = uniqid();
+			move_uploaded_file($image['tmp_name'], $path . $image_name);
 			if ($this->User->save($this->request->data)) {
 				$this->Flash->success(__('The user has been saved'));
 				return $this->redirect(array('action' => 'index'));
