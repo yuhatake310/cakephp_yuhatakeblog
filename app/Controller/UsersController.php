@@ -31,6 +31,17 @@ class UsersController extends AppController {
 		$this->redirect($this->Auth->logout());
 	}
 
+	public function view($id = null) {
+		$user = $this->Auth->user();
+		$this->set('loginuser', $user);
+		$this->User->id = $id;
+		if (!$this->User->exists()) {
+			throw new NotFoundException(__('Invalid user'));
+		}
+		$this->set('user', $this->User->findById($id));
+		$this->set('post_userid', $id);
+	}
+
 	public function add() {
 		$user = $this->Auth->user();
 		$this->set('user', $user);
