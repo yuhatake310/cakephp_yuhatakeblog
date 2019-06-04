@@ -67,6 +67,8 @@ class UsersController extends AppController {
 			$image = $this->request->data('User.image');
 			$image_name = uniqid();
 			move_uploaded_file($image['tmp_name'], $path . $image_name);
+
+			$this->request->data['User']['image'] = $image_name;
 			if ($this->User->save($this->request->data)) {
 				$this->Flash->success(__('The user has been saved'));
 				return $this->redirect(array('action' => 'index'));
