@@ -10,6 +10,13 @@ class User extends AppModel {
 				'message' => 'ユーザー名を入力してください'
 			)
 		),
+		'image' => array(
+			'file_extension' => array(
+				'rule' => array('extension', array('jpg', 'jpeg', 'gif', 'png')),
+				'message' => '画像ファイルを選択してください',
+				'allowEmpty' => true,
+			)
+		),
 		'email' => array(
 			'required' => array(
 				'rule' => 'notBlank',
