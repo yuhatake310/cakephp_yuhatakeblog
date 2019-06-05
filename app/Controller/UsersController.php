@@ -63,19 +63,35 @@ class UsersController extends AppController {
 			throw new NotFoundException(__('Invalid user'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$path = Configure::read('App.imageBaseUrl');
 			$image = $this->request->data('User.image');
-			$image_name = uniqid();
-			move_uploaded_file($image['tmp_name'], $path . $image_name);
+			if (empty($image['tmp_name'])) {
+				if ($this->User->saveField('comment', $this->request->data('User.comment'))) {
+					$this->Flash->success(__('The comment has been saved'));
+					return $this->redirect(array('controller' => 'posts', 'action' => 'index'));
+				}
+				$this->Flash->error(
+					__('The comment could not be saved. Please, try again.')
+				);
+			} else {
+				$this->User->set($this->request->data);
+				if ($this->User->validates(array('fieldList' => array('image')))) {
+					$path = Configure::read('App.imageBaseUrl');
+					$image_name = uniqid();
+					move_uploaded_file($image['tmp_name'], $path . $image_name);
 
-			$this->request->data['User']['image'] = $image_name;
-			if ($this->User->save($this->request->data)) {
-				$this->Flash->success(__('The user has been saved'));
-				return $this->redirect(array('controller' => 'posts', 'action' => 'index'));
+					$this->request->data['User']['image'] = $image_name;
+					if ($this->User->save($this->request->data, array('validate' => false))) {
+						$this->Flash->success(__('The user has been saved'));
+						return $this->redirect(array('controller' => 'posts', 'action' => 'index'));
+					}
+					$this->Flash->error(
+						__('The user could not be saved. Please, try again.')
+					);
+				} else {
+					$this->Flash->error('画像ファイルを選択してください');
+					return $this->redirect(array('action' => 'edit', $id));
+				}
 			}
-			$this->Flash->error(
-				__('The user could not be saved. Please, try again.')
-			);
 		} else {
 			$this->request->data = $this->User->findById($id);
 			unset($this->request->data['User']['password']);
