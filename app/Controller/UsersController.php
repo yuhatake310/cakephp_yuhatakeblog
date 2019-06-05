@@ -98,22 +98,4 @@ class UsersController extends AppController {
 		}
 	}
 
-	public function delete($id = null) {
-		// Prior to 2.5 use
-		// $this->request->onlyAllow('post');
-
-		$this->request->allowMethod('post');
-
-		$this->User->id = $id;
-		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Invalid user'));
-		}
-		if ($this->User->delete()) {
-			$this->Flash->success(__('User deleted'));
-			return $this->redirect(array('action' => 'index'));
-		}
-		$this->Flash->error(__('User was not deleted'));
-		return $this->redirect(array('action' => 'index'));
-	}
-
 }
