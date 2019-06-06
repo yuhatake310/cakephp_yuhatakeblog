@@ -32,14 +32,13 @@ class UsersController extends AppController {
 	}
 
 	public function view($id = null) {
-		$user = $this->Auth->user();
-		$this->set('loginuser', $user);
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
 			throw new NotFoundException(__('Invalid user'));
 		}
-		$this->set('user', $this->User->findById($id));
-		$this->set('post_userid', $id);
+		$login_user = $this->Auth->user();
+		$post_user = $this->User->findById($id);
+		$this->set(compact('login_user', 'post_user'));
 	}
 
 	public function add() {
