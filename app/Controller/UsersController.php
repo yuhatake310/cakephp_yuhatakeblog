@@ -13,7 +13,7 @@ class UsersController extends AppController {
 
 	public function blackhole($type = 'csrf') {
 		$this->Flash->error(__('不正な送信が行われました'));
-		return $this->redirect(array('action' => 'add'));
+		return $this->redirect(array('controller' => 'posts', 'action' => 'index'));
 		exit();
 	}
 
