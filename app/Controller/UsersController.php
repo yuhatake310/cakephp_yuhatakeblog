@@ -7,7 +7,7 @@ class UsersController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('add', 'logout', 'edit');
+		$this->Auth->allow('add', 'logout', 'edit', 'reset');
 		$this->Security->blackHoleCallback = 'blackhole';
 	}
 
@@ -29,6 +29,9 @@ class UsersController extends AppController {
 
 	public function logout() {
 		$this->redirect($this->Auth->logout());
+	}
+
+	public function reset() {
 	}
 
 	public function view($id = null) {
