@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('CakeEmail', 'Network/Email');
 
 class UsersController extends AppController {
 	public $helpers = array('Html', 'Form', 'Flash');
@@ -32,6 +33,29 @@ class UsersController extends AppController {
 	}
 
 	public function reset() {
+		if (isset($this->request->data['User']['email'])) {
+			$user = $this->User->findByEmail($this->request->data['User']['email']);
+			if ($user === false) {
+				$this->Flash->success('再発行用URLを送信しました');
+			} else {
+				$token = md5(uniqid(rand(),true));
+				$reset_time = date('Y-m-d H:i:s');
+				$update_data = array('User' => array('id' => $user['User']['id'], 'token' => $token, 'reseted' => $reset_time));
+				$fields = array('token', 'reseted');
+				if ($this->User->save($update_data, false, $fields)) {
+					$email = new CakeEmail();
+					$email->template('reset', 'default')
+						->emailFormat('text')
+						->viewVars(array('token' => $token))
+						->to($user['User']['email'])
+						->from('from@hoge.co.jp')
+						->subject('パスワード再設定用URL')
+						->send();
+
+					$this->Flash->success('再発行用URLを送信しました');
+				}
+			}
+		}
 	}
 
 	public function view($id = null) {
