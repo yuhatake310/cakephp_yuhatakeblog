@@ -8,7 +8,7 @@ class UsersController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('add', 'logout', 'edit', 'reset');
+		$this->Auth->allow('add', 'logout', 'edit', 'reset', 'reissue');
 		$this->Security->blackHoleCallback = 'blackhole';
 	}
 
@@ -56,6 +56,35 @@ class UsersController extends AppController {
 							->send();
 
 						$this->Flash->success('再発行用URLを送信しました');
+					}
+				}
+			}
+		}
+	}
+
+	public function reissue($token = null) {
+		if (isset($this->request->data['User']['password'])) {
+			if (empty($token)) {
+				$this->Flash->error('不正なアクセスです。再度お試しください。');
+				return $this->redirect(array('controller' => 'Posts', 'action' => 'index'));
+			} else {
+				$user = $this->User->findByToken($token);
+				if ($user === false || empty($user)) {
+					$this->Flash->error('不正なアクセスです。再度お試しください。');
+					return $this->redirect(array('controller' => 'Posts', 'action' => 'index'));
+				} else {
+					$limit_time  = date('Y-m-d H:i:s', strtotime('-30 minute'));
+					if (strtotime($user['User']['reseted']) >= strtotime($limit_time)) {
+						$update_data = array('User' => array('id' => $user['User']['id'], 'password' => $this->request->data['User']['password'],  'token' => null));
+						$fields = array('password', 'token');
+						if ($this->User->save($update_data, true, $fields)) {
+							$this->Flash->success('パスワードを更新しました');
+							return $this->redirect(array('action' => 'login'));
+						}
+						$this->Flash->error('パスワードを更新できませんでした。再度お試しください。');
+					} else {
+						$this->Flash->error('不正なアクセスです。再度お試しください。');
+						return $this->redirect(array('controller' => 'Posts', 'action' => 'index'));
 					}
 				}
 			}
