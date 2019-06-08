@@ -20,7 +20,7 @@ class User extends AppModel {
 		'email' => array(
 			'required' => array(
 				'rule' => 'notBlank',
-				'message' => 'パスワードを入力してください'
+				'message' => 'メールアドレスを入力してください'
 			),
 			'mail_format' => array(
 				'rule' => 'email',
