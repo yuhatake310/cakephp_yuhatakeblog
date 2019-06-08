@@ -34,6 +34,7 @@ class UsersController extends AppController {
 
 	public function reset() {
 		$this->User->set($this->request->data);
+		unset($this->User->validate['email']['mail_unique']);
 		if ($this->User->validates(array('fieldList' => array('email')))) {
 			if (isset($this->request->data['User']['email'])) {
 				$user = $this->User->findByEmail($this->request->data['User']['email']);
@@ -58,8 +59,6 @@ class UsersController extends AppController {
 					}
 				}
 			}
-		} else {
-			$this->Flash->error('メールアドレスの形式が正しくありません');
 		}
 	}
 
