@@ -3,20 +3,20 @@ class PostsController extends AppController {
 	public $helpers = array('Html', 'Form', 'Flash');
 
 	public function isAuthorized($user) {
-	// 登録済ユーザーは投稿できる
-	if ($this->action === 'add') {
-		return true;
-	}
-
-	// 投稿のオーナーは編集や削除ができる
-	if (in_array($this->action, array('edit', 'delete'))) {
-		$postId = (int) $this->request->params['pass'][0];
-		if ($this->Post->isOwnedBy($postId, $user['id'])) {
+		// 登録済ユーザーは投稿できる
+		if ($this->action === 'add') {
 			return true;
 		}
-	}
 
-	return parent::isAuthorized($user);
+		// 投稿のオーナーは編集や削除ができる
+		if (in_array($this->action, array('edit', 'delete'))) {
+			$postId = (int) $this->request->params['pass'][0];
+			if ($this->Post->isOwnedBy($postId, $user['id'])) {
+				return true;
+			}
+		}
+
+		return parent::isAuthorized($user);
 	}
 
 	public function index() {
