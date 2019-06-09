@@ -81,7 +81,7 @@ class UsersController extends AppController {
 						}
 						$this->Flash->error('パスワードを更新できませんでした。再度お試しください。');
 					} else {
-						$this->Flash->error('不正なアクセスです。再度お試しください。');
+						$this->Flash->error('URLの有効期限が切れています。再度URLを発行してください。');
 						return $this->redirect(array('controller' => 'Posts', 'action' => 'index'));
 					}
 				}
