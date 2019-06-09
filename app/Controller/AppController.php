@@ -52,7 +52,8 @@ class AppController extends Controller {
 					'passwordHasher' => 'Blowfish'
 				)
 			),
-			'authorize' => array('Controller')
+			'authorize' => array('Controller'),
+			'authError' => 'あなたはそのURLにアクセスする権限がありません。'
 		)
 	);
 
@@ -65,6 +66,8 @@ class AppController extends Controller {
 			return true;
 		}
 
+		$this->Flash->error('あなたはそのURLにアクセスする権限がありません。');
+		return $this->redirect(array('controller' => 'users', 'action' => 'login'));
 		return false;
 	}
 }
