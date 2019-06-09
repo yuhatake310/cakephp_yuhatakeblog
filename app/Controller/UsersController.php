@@ -8,8 +8,19 @@ class UsersController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('add', 'logout', 'edit', 'reset', 'reissue');
+		$this->Auth->allow('add', 'logout', 'reset', 'reissue');
 		$this->Security->blackHoleCallback = 'blackhole';
+	}
+
+	public function isAuthorized($user) {
+		if ($this->action === 'edit') {
+			$id = $this->request->params['pass'][0];
+			if ($id === $user['id']) {
+				return true;
+			}
+		}
+
+		return parent::isAuthorized($user);
 	}
 
 	public function blackhole($type = 'csrf') {
