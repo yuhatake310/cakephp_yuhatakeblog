@@ -1,5 +1,6 @@
 # User specific & automatically generated files #
 #################################################
+/app/View/Layouts/default.ctp
 /app/webroot/img
 /app/Config/database.php
 /app/tmp
